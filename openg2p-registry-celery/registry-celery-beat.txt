@@ -1,4 +1,6 @@
 # registry-celery-beat.txt
-#!openg2p/openg2p-registry-celery-beat-producers:develop
+#!openg2p/openg2p-registry-celery-beat-producers:family
 #!openg2p-registry-celery/Dockerfile.producers
 #!.
+# adapters/dependencies (adjust refs/branches/tags as needed)
+git+https://github.com/openg2p/openg2p-registry-gen2-extensions@develop#subdirectory=openg2p-registry-family-extension
