@@ -18,16 +18,16 @@ RUN pip install --no-cache-dir git+https://github.com/openg2p/openg2p-fastapi-co
 # Always from openg2p-registry-gen2 repo (no local installs)
 RUN pip install --no-cache-dir \
     "git+https://github.com/openg2p/openg2p-registry-gen2-core@${G2P_REF}#subdirectory=openg2p-registry-core" \
-    "git+https://github.com/openg2p/openg2p-registry-gen2-apis@${G2P_REF}#subdirectory=openg2p-registry-staff-portal-api"
+    "git+https://github.com/openg2p/openg2p-registry-gen2-apis@${G2P_REF}#subdirectory=openg2p-registry-bene-portal-api"
 
 RUN apk del --no-network .build-deps
 
 ENV PYTHONUNBUFFERED=1
-ENV STAFF_PORTAL_WORKER_TYPE=gunicorn
-ENV STAFF_PORTAL_HOST=0.0.0.0
-ENV STAFF_PORTAL_PORT=8000
-ENV STAFF_PORTAL_NO_OF_WORKERS=8
+ENV BENE_WORKER_TYPE=gunicorn
+ENV BENE_HOST=0.0.0.0
+ENV BENE_PORT=8000
+ENV BENE_NO_OF_WORKERS=8
 
 # Use module path for migrate and Gunicorn WSGI app
-CMD python3 -m openg2p_registry_staff_portal_api.main migrate; \
-    ${STAFF_PORTAL_WORKER_TYPE} "openg2p_registry_staff_portal_api.main:app" --workers ${STAFF_PORTAL_NO_OF_WORKERS} --worker-class uvicorn.workers.UvicornWorker --bind ${STAFF_PORTAL_HOST}:${STAFF_PORTAL_PORT}
+CMD python3 -m openg2p_registry_bene_portal_api.main migrate; \
+    ${BENE_WORKER_TYPE} "openg2p_registry_bene_portal_api.main:app" --workers ${BENE_NO_OF_WORKERS} --worker-class uvicorn.workers.UvicornWorker --bind ${BENE_HOST}:${BENE_PORT}
